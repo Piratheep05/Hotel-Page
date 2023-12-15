@@ -75,9 +75,9 @@ const BasicTable =()=> {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row,index) => (
+          {rows && rows.map((row,index) => (
             <TableRow
-              key={row.room}
+            key={index}
               sx={{
                 '&:not(:first-child) td, &:not(:first-child) th': { border: 0 }, // Remove border for all rows except the first row
               }}

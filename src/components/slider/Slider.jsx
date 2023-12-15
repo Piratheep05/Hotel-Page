@@ -37,8 +37,8 @@ function SwipeableTextMobileStepper() {
         onChangeIndex={handleStepChange}
         enableMouseEvents
       >
-        {sliderData.map((step, index) => (
-          <div key={step.label}>
+        {sliderData && sliderData.map((step, index) => (
+          <div key={index}>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 sx={{
@@ -62,11 +62,11 @@ function SwipeableTextMobileStepper() {
                   }}
                 >
                   <Typography variant='h3'>
-                    {step.label} {/* Add your image-related text here */}
+                    {step.label} 
                   </Typography>
 
                   <Typography variant='h5'>
-                    {step.description} {/* Add your image-related text here */}
+                    {step.description} 
                   </Typography>
                 </Box>
               </Box>

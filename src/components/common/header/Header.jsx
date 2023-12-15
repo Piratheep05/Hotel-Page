@@ -1,5 +1,5 @@
 import React from 'react';
-import { navBar1 } from '../../data/Data';
+import { navBarOneData } from '../../data/Data';
 import { Link } from 'react-router-dom';
 import {
   Box,
@@ -9,11 +9,15 @@ import {
   Typography,
   IconButton,
   Tooltip,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
-import { navBar2 } from '../../data/Data';
-
+import { navBarTwoData } from '../../data/Data';
 import { styled } from '@mui/material/styles';
 import { tooltipClasses } from '@mui/material/Tooltip';
+import Drawer from '../Drawer/Drawer';
+// import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+// import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -21,7 +25,11 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: '#fff',
     color: 'rgba(0, 0, 0, 0.87)',
-    maxWidth: '1000px',
+    minWidth: '100vw',
+    position: 'relative',
+    left: 0,
+    top: -10,
+    // transform:'translateY(-50px)',
     fontSize: theme.typography.pxToRem(12),
     border: '1px solid #dadde9',
     height: '10vw',
@@ -29,14 +37,16 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 }));
 
 const Header = () => {
-  
-
+  const theme = useTheme();
+  //console.log(theme);
+  const isMatch = useMediaQuery(theme.breakpoints.down('md'));
+  // console.log(isMatch);
   return (
     <Box>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position='static' sx={{ backgroundColor: '#fff' }}>
-          <Toolbar variant='dense'>
-            <Box sx={{ width: '190px', height: '40px', ml: 5 }}>
+        {isMatch ? (
+          <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <Box sx={{ width: '190px', height: '40px', ml: 7 }}>
               <Link to='/'>
                 <img
                   alt='logo'
@@ -44,78 +54,134 @@ const Header = () => {
                 />
               </Link>
             </Box>
-            <Box sx={{ flexGrow: 1 }} />
-            <Box sx={{ mr: 5, p: 1.5 }}>
-              {navBar1.map((item) => (
-                <Button
-                  key={item}
-                  sx={{ color: '#333', fontSize: '14px', fontWeight: 550 }}
-                >
-                  {item.icon} {item.name} |
-                </Button>
-              ))}
-            </Box>
-          </Toolbar>
-        </AppBar>
-        <AppBar position='static' sx={{ backgroundColor: '#333' }}>
-          <Toolbar variant='dense'>
-            <Box sx={{ display: 'flex', p: 0.1, ml: 6 }}>
-              {navBar2.map((data) => {
-                return (
-                  <>
-                    <Box>
-                      <div>
-                        <HtmlTooltip
-                          title={
-                            <React.Fragment>
-                              <Typography
-                                color='inherit'
-                                variant='h6'
-                                fontWeight={600}
-                              >
-                                {data.head}
-                              </Typography>
-                              <Typography variant='body2'>
-                                {data.details}
-                              </Typography>
-                            </React.Fragment>
-                          }
-                        >
-                          <IconButton sx={{ color: '#fff' }}>
-                            <Link
-                              to={data.path}
-                              style={{ textDecoration: 'none' }}
-                            >
-                              <Typography
-                                sx={{ color: '#fff', textDecoration: 'none' }}
-                              >
-                                {data.text}
-                              </Typography>
-                            </Link>
-                          </IconButton>
-                        </HtmlTooltip>
-                      </div>
-                    </Box>
-                  </>
-                );
-              })}
-              <Box sx={{ flexGrow: 1 }} />
-              <Box sx={{ ml: 15 }}>
-                <Button
-                  variant='outlined'
+            <Drawer />
+          </Box>
+        ) : (
+          <>
+            <AppBar position='static' sx={{ backgroundColor: '#fff' }}>
+              <Toolbar variant='dense'>
+                <Box sx={{ width: '190px', height: '40px', ml: 7 }}>
+                  <Link to='/'>
+                    <img
+                      alt='logo'
+                      src='https://s.shangri-la.com/sl-fe-hotel-prod/img/shangrila_en2021.a24c901.png'
+                    />
+                  </Link>
+                </Box>
+
+                <Box sx={{ flexGrow: 1 }} />
+
+                <Box sx={{ mr: 5, p: 1.5 }}>
+                  {navBarOneData &&
+                    navBarOneData.map((item, index) => (
+                      <Button
+                        key={index}
+                        sx={{
+                          color: '#333',
+                          fontSize: '14px',
+                          fontWeight: 550,
+                        }}
+                      >
+                        {item.icon} {item.name} |
+                      </Button>
+                    ))}
+                </Box>
+              </Toolbar>
+            </AppBar>
+
+            <AppBar position='static' sx={{ backgroundColor: '#333' }}>
+              <Toolbar variant='dense'>
+                <Box
                   sx={{
-                    color: '#fff',
-                    border: '1px solid #fff',
-                    fontSize: '14px',
-                    fontWeight: 'bold',
+                    display: 'flex',
+                    justifyContent: 'space-around',
+                    width: '100%',
                   }}
                 >
-                  FIND A HOTEL
-                </Button>
-              </Box>
-            </Box>
-          </Toolbar>
-        </AppBar>
+                  <Box sx={{ display: 'flex', mr: 20 }}>
+                    {navBarTwoData &&
+                      navBarTwoData.map((data, index) => (
+                        <Box key={index}>
+                          <div>
+                          {data.head ? (
+                    <HtmlTooltip
+                      title={
+                        <React.Fragment>
+                          <Typography
+                            color='inherit'
+                            variant='h6'
+                            fontWeight={600}
+                          >
+                            {data.head}
+                          </Typography>
+                          <Typography variant='body2'>
+                            {data.details}
+                          </Typography>
+                        </React.Fragment>
+                      }
+                    >
+                      <IconButton sx={{ color: '#fff' }}>
+                        <Link
+                          to={data.path}
+                          style={{ textDecoration: 'none' }}
+                        >
+                          <Typography
+                            sx={{
+                              color: '#fff',
+                              textDecoration: 'none',
+                              '&:hover': {
+                                backgroundColor: '#fff',
+                                color: '#000',
+                              },
+                            }}
+                          >
+                            {data.text}
+                          </Typography>
+                        </Link>
+                      </IconButton>
+                    </HtmlTooltip>
+                  ) : (
+                    <IconButton sx={{ color: '#fff' }}>
+                      <Link to={data.path} style={{ textDecoration: 'none' }}>
+                        <Typography
+                          sx={{
+                            color: '#fff',
+                            textDecoration: 'none',
+                            '&:hover': {
+                              backgroundColor: '#fff',
+                              color: '#000',
+                            },
+                          }}
+                        >
+                          {data.text}
+                        </Typography>
+                      </Link>
+                    </IconButton>
+                  )}
+                          </div>
+                        </Box>
+                      ))}
+                  </Box>
+                  {/* <Box sx={{ flexGrow: 1 }} /> */}
+
+                  <Box sx={{}}>
+                    <Button
+                      variant='outlined'
+                      sx={{
+                        color: '#fff',
+                        border: '1px solid #fff',
+                        fontSize: '14px',
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      FIND A HOTEL
+                    </Button>
+                  </Box>
+                </Box>
+              </Toolbar>
+            </AppBar>
+          </>
+        )}
       </Box>
     </Box>
   );

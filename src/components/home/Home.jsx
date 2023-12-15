@@ -1,16 +1,17 @@
 import React from 'react';
-import Featured from './featured/Featured';
-import Hero from './hero/Hero';
-import Location from './location/Location';
-import Recent from './recent/Recent';
+import ExperinceView from './ExperinceView/ExperinceView';
+import HomeSlider from './HomeSlider/HomeSlider';
+import Distination from './Distination/Distination';
+import Offer from './Offer/Offer'
 
 const Home = () => {
   return (
     <>
-      <Hero />
-      <Featured />
-      <Recent />
-      <Location />
+      <HomeSlider />
+      <Distination />
+      <ExperinceView />
+      <Offer />
+     
     </>
   );
 };
